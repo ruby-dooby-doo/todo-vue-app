@@ -23,7 +23,7 @@
     <h1>{{ message }}</h1>
 
     <div v-for="task in tasks">
-      <p>{{ task.text }}</p>
+      <p v-on:click="removeTask(task)">{{ task.text }}</p>
     </div>
 
     text: <input v-model="newTask.text">

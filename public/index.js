@@ -22,15 +22,24 @@ var HomePage = {
       // find the info i want to add to the tasks array
       // this.newTask
       // add that info to the tasks array
-      if (this.newTask.text === "") {
-        console.log('new task is an empty string');
-      } else {
+      // if a task is empty, don't add it.
+      // if a task is not empty, do add it
+      if (this.newTask.text !== "") {
         console.log('new task is NOT an empty string');
         this.tasks.push(this.newTask);
         this.newTask = {text: "", completed: false};
       }
-      // if a task is empty, don't add it.
-      // if a task is not empty, do add it
+    },
+    removeTask: function(inputTask) {
+      console.log('removeTask');
+      // i need to remove the task
+      // which task should I remove?
+      console.log(inputTask);
+      // find the index of inputTask
+      var index = this.tasks.indexOf(inputTask);
+      // remove that index from the array
+      this.tasks.splice(index, 1);
+      // this.tasks
     }
   },
   computed: {}
