@@ -8,7 +8,7 @@ var HomePage = {
     return {
       message: "Welcome to Vue.js!",
       tasks: [
-        {text: 'Take out the garbage', completed: false},
+        {text: 'Take out the garbage', completed: true},
         {text: 'Make the bed', completed: false},
         {text: 'Mow the lawn', completed: false}
       ],
@@ -30,16 +30,53 @@ var HomePage = {
         this.newTask = {text: "", completed: false};
       }
     },
-    removeTask: function(inputTask) {
+    completeTask: function(inputTask) {
       console.log('removeTask');
+      // if the task is completed, make it incomplete, if it's incoplete make it complete
+      inputTask.completed = !inputTask.completed;
+
+      // ugly syntax
+      // this.$set(inputTask, 'completed', !(inputTask.completed));
+      // if (inputTask.completed === true) {
+      //   inputTask.completed = false;
+      // } else {
+      //   inputTask.completed = true;
+      // }
+
       // i need to remove the task
       // which task should I remove?
-      console.log(inputTask);
-      // find the index of inputTask
-      var index = this.tasks.indexOf(inputTask);
-      // remove that index from the array
-      this.tasks.splice(index, 1);
+      // console.log(inputTask);
+      // // find the index of inputTask
+      // var index = this.tasks.indexOf(inputTask);
+      // // remove that index from the array
+      // this.tasks.splice(index, 1);
       // this.tasks
+    },
+    numberOfIncompleteTasks: function() {
+      // find all the tasks
+      // figure out how many are incomplete
+      var counter = 0;
+      for (var i = 0; i < this.tasks.length; i++) {
+        // if a task is complete, add to the counter
+        if (!this.tasks[i].completed) {
+          counter++;
+        }
+      }
+      return counter;
+    },
+    removeCompletedTasks: function() {
+      console.log('removing completed tasks...');
+      // loop through the array of tasks
+      // collect all the tasks that are not complete
+      // reset the tasks variable to the incompleted tasks
+      var incompleteTasks = [];
+      for (var i = 0; i < this.tasks.length; i++) {
+        if (!this.tasks[i].completed) {
+          // push into the array of incomplete tasks
+          incompleteTasks.push(this.tasks[i]);
+        }
+      }
+      this.tasks = incompleteTasks;
     }
   },
   computed: {}

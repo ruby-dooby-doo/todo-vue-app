@@ -7,6 +7,12 @@
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
   <script src="index.js" defer></script>
+
+  <style>
+    .strike {
+      text-decoration: line-through;
+    }
+  </style>
 </head>
 <body>
   <div id="vue-app">
@@ -22,9 +28,16 @@
 
     <h1>{{ message }}</h1>
 
+    <p>This is how many tasks there are: {{ numberOfIncompleteTasks() }}</p>
+
     <div v-for="task in tasks">
-      <p v-on:click="removeTask(task)">{{ task.text }}</p>
+      <p v-on:click="completeTask(task)" v-bind:class="{strike: task.completed}">{{ task.text }}</p>
+      <p>{{ task.completed }}</p>
     </div>
+
+    <button v-on:click="removeCompletedTasks()">Remove tasks that have been completed</button>
+
+    <!-- <li v-for="task in tasks" v-on:click="somethingSomething()">{{ task.text }}</li> -->
 
     text: <input v-model="newTask.text">
     <button v-on:click="addTask()">Add the task</button>
