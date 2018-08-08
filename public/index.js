@@ -39,7 +39,7 @@ var HomePage = {
       }.bind(this));
     },
     completeTask: function(inputTask) {
-      console.log('removeTask');
+      console.log('completeTask');
       // if the task is completed, make it incomplete, if it's incoplete make it complete
       inputTask.completed = !inputTask.completed;
 
@@ -85,6 +85,18 @@ var HomePage = {
         }
       }
       this.tasks = incompleteTasks;
+    },
+    removeTask: function(inputTask) {
+      console.log('removing the task...');
+      // send a delete request to the API -- backend
+      axios.delete('/api/tasks/' + inputTask.id).then(function(response) {
+        console.log('in the delete callback');
+        // remove the task from the array -- frontend
+        var index = this.tasks.indexOf(inputTask);
+        // // remove that index from the array
+        this.tasks.splice(index, 1);
+        //
+      }.bind(this));
     }
   },
   computed: {}

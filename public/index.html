@@ -33,6 +33,8 @@
     <div v-for="task in tasks">
       <p v-on:click="completeTask(task)" v-bind:class="{strike: task.completed}">{{ task.text }}</p>
       <p>{{ task.completed }}</p>
+      <button v-on:click="removeTask(task)">Delete</button>
+      <hr>
     </div>
 
     <p><button v-on:click="removeCompletedTasks()">Remove completed</button></p>
