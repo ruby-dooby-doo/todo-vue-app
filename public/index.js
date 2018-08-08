@@ -1,5 +1,3 @@
-
-
 /* global Vue, VueRouter, axios */
 
 var HomePage = {
@@ -7,15 +5,18 @@ var HomePage = {
   data: function() {
     return {
       message: "Welcome to Vue.js!",
-      tasks: [
-        {text: 'Take out the garbage', completed: true},
-        {text: 'Make the bed', completed: false},
-        {text: 'Mow the lawn', completed: false}
-      ],
+      tasks: [],
       newTask: {text: "", completed: false}
     };
   },
-  created: function() {},
+  created: function() {
+    console.log('in the created function');
+    // make a web request to my api to get the data
+    axios.get('/api/tasks').then(function(response) {
+      console.log(response.data);
+      this.tasks = response.data;
+    }.bind(this));
+  },
   methods: {
     addTask: function() {
       console.log('adding the task...');
@@ -24,11 +25,18 @@ var HomePage = {
       // add that info to the tasks array
       // if a task is empty, don't add it.
       // if a task is not empty, do add it
-      if (this.newTask.text !== "") {
-        console.log('new task is NOT an empty string');
-        this.tasks.push(this.newTask);
+      // if (this.newTask.text !== "") {
+      console.log('new task is NOT an empty string');
+      // }
+      var theParams = {
+        text: this.newTask.text
+      };
+
+      axios.post('/api/tasks', theParams).then(function(response) {
+        console.log('in the response of the create people');
+        this.tasks.push(response.data);
         this.newTask = {text: "", completed: false};
-      }
+      }.bind(this));
     },
     completeTask: function(inputTask) {
       console.log('removeTask');
@@ -57,7 +65,7 @@ var HomePage = {
       // figure out how many are incomplete
       var counter = 0;
       for (var i = 0; i < this.tasks.length; i++) {
-        // if a task is complete, add to the counter
+        // if a task is incomplete, add to the counter
         if (!this.tasks[i].completed) {
           counter++;
         }

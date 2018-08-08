@@ -1,5 +1,3 @@
-
-
 Rails.application.routes.draw do
   namespace :api do
     get "/tasks" => "tasks#index"
